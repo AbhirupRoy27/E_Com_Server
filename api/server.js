@@ -1,10 +1,10 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import cors from 'cors'
-import handleErrors from '../Middleware/Error/Error.js'
-import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
+// import cors from 'cors'
+// import handleErrors from '../Middleware/Error/Error.js'
+// import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
 import appLive from '../Routes/InitialGet/IG.js'
-import { customError } from '../Routes/Error/error.js'
+// import { customError } from '../Routes/Error/error.js'
 dotenv.config()
 
 const app = express()
