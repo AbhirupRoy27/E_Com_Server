@@ -8,21 +8,21 @@ import { customError } from '../Routes/Error/error.js'
 dotenv.config()
 
 const app = express()
-app.use(
-  cors({
-    origin: ['http://localhost:5173', 'https://abhisecomnew.netlify.app'],
-  })
-)
+// app.use(
+//   cors({
+//     origin: ['http://localhost:5173', 'https://abhisecomnew.netlify.app'],
+//   })
+// )
 app.use(express.json())
 
 app.get('/', appLive)
 
-app.use('/api/books', BooksRoutes)
+// app.use('/api/books', BooksRoutes)
 
-app.get('/:any', customError)
+// app.get('/:any', customError)
 
 // Handling Final Error
-app.use(handleErrors)
+// app.use(handleErrors)
 
 if (process.env.NODE_ENV !== 'production') {
   const PORT = process.env.PORT || 3000
