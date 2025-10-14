@@ -1,17 +1,32 @@
 import express from 'express'
 import dotenv from 'dotenv'
+import cors from 'cors'
+import handleErrors from '../Middleware/Error/Error.js'
+import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
+import appLive from '../Routes/InitialGet/IG.js'
+import { customError } from '../Routes/Error/error.js'
 dotenv.config()
 
 const app = express()
+app.use(
+  cors({
+    origin: ['http://localhost:5173', 'https://abhisecomnew.netlify.app'],
+  })
+)
 app.use(express.json())
 
-app.get('/', (req, res) => {
-  res.status(200).json({
-    success: 'OK',
-    message: 'Server is Running Fine',
-  })
-})
+app.get('/', appLive)
 
-app.listen(process.env.PORT, () =>
-  console.log(`Server at http://localhost:${process.env.PORT}`)
-)
+app.use('/api/books', BooksRoutes)
+
+app.get('/:any', customError)
+
+// Handling Final Error
+app.use(handleErrors)
+
+if (process.env.NODE_ENV !== 'production') {
+  const PORT = process.env.PORT || 3000
+  app.listen(PORT, () => console.log(`🚀 Local server running on port ${PORT}`))
+}
+
+export default app
