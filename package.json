@@ -1,0 +1,25 @@
+{
+  "name": "e_com_server",
+  "version": "1.0.0",
+  "description": "Server for mu E-Com Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node --watch ./api/Server",
+    "dev": "nodemon ./api/Server",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com-personal:AbhirupRoy27/E_Com_Server.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mongoose": "^8.19.1",
+    "nodemon": "^3.1.10"
+  }
+}
