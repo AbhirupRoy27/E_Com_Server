@@ -2,7 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import handleErrors from '../Middleware/Error/Error.js'
-// import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
+import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
 import appLive from '../Routes/InitialGet/IG.js'
 import { customError } from '../Routes/Error/error.js'
 dotenv.config()
@@ -17,7 +17,7 @@ app.use(express.json())
 
 app.get('/', appLive)
 
-// app.use('/api/books', BooksRoutes)
+app.use('/api/books', BooksRoutes)
 
 app.get('/:any', customError)
 
