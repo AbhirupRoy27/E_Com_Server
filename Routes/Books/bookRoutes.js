@@ -6,7 +6,13 @@ import { Books } from '../../DB/Books/bookModel.js'
 BooksRoutes.get('/', async (req, res, next) => {
   try {
     connectBooks()
-    const allBooks = await Books.find()
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 5
+
+    const skip = (page - 1) * limit
+
+    const allBooks = await Books.find().skip(skip).limit(limit)
+
     res.json(allBooks)
   } catch (error) {
     next(error)
