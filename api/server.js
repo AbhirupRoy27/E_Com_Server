@@ -5,6 +5,7 @@ import handleErrors from '../Middleware/Error/Error.js'
 import { BooksRoutes } from '../Routes/Books/bookRoutes.js'
 import appLive from '../Routes/InitialGet/IG.js'
 import { customError } from '../Routes/Error/error.js'
+import { bookCovers } from '../Routes/Books/booksCover.js'
 dotenv.config()
 
 const app = express()
@@ -18,6 +19,7 @@ app.use(express.json())
 app.get('/', appLive)
 
 app.use('/api/books', BooksRoutes)
+app.use('/api/covers', bookCovers)
 
 app.get('/:any', customError)
 

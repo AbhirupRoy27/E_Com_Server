@@ -7,17 +7,34 @@ BooksRoutes.get('/', async (req, res, next) => {
   try {
     connectBooks()
 
-    if (req.query.page) {
-      const page = parseInt(req.query.page) || 1
-      const limit = parseInt(req.query.limit) || 0
+    const page = parseInt(req.query.page) || 1
+    const limit = parseInt(req.query.limit) || 10
 
-      const skip = (page - 1) * limit
-      const allBooks = await Books.find().skip(skip).limit(limit)
-      return res.json(allBooks)
+    if (page < 1 || limit < 1) {
+      return res.status(404).json({
+        status: 'FAIL',
+        message: 'The URL is Brocken.',
+        error: {
+          page:
+            req.query.page < 1
+              ? 'Negative or Zero Page Number'
+              : 'Not Mentioned',
+          limit:
+            req.query.limit < 1 ? 'Negative or Zero LIMIT' : 'Not Mentioned',
+        },
+      })
     }
 
-    const allBooks = await Books.find()
-    res.json(allBooks)
+    const skip = (page - 1) * limit
+    const totalDoc = await Books.countDocuments()
+
+    const allBooks = await Books.find().skip(skip).limit(limit)
+    return res.json({
+      allBooks,
+      total: totalDoc,
+      page: req.query.page,
+      totalPages: Math.ceil(totalDoc / limit),
+    })
   } catch (error) {
     next(error)
   }

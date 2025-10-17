@@ -9,6 +9,13 @@ export default function handleErrors(err, req, res, next) {
 
     throw err
   } catch (error) {
+    if (error.code === 11000) {
+      return res.status(404).json({
+        success: 'FAIL',
+        message: 'Duplicate Entry',
+        errorIn: error.keyValue,
+      })
+    }
     return res.status(404).json({
       success: 'FAIL',
       message: err.message,
