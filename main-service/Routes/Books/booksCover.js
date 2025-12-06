@@ -12,6 +12,23 @@ bookCovers.get('/', (req, res, next) => {
   })
 })
 
+bookCovers.get('/img', async (req, res, next) => {
+  try {
+    connectBooks()
+
+    let limit = parseInt(req.query.limit)
+    if (limit < 1) throw new Error('Limit Not Valid')
+
+    const data = await Books.find().limit(limit || 6)
+    res.json({
+      Covers: data.map((p) => p.coverImage),
+      limit: limit || 'default',
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
 bookCovers.get('/:any', (req, res, next) => {
   try {
     const some = req.params.any
@@ -21,18 +38,10 @@ bookCovers.get('/:any', (req, res, next) => {
   }
 })
 
-bookCovers.get('/img', async (req, res, next) => {
+bookCovers.use((req, res, next) => {
   try {
-    connectBooks()
-
-    let limit = parseInt(req.query.limit)
-    if (limit < 1) throw new Error('Limit Not Valid')
-
-    const data = await Books.find().limit(limit || 4)
-    res.json({
-      Covers: data.map((p) => p.coverImage),
-      limit: limit || 'default',
-    })
+    const some = req.params.any
+    throw new Error(`Not Found`)
   } catch (error) {
     next(error)
   }
