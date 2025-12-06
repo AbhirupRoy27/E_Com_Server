@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { connectDB, disConnectDB } from '../utils/connectDB.js'
+import addProduct from '../controllers/addProduct.js'
 
 const ProductRouter = Router()
 
@@ -9,7 +10,7 @@ ProductRouter.get('/', async (req, res) => {
     if (!id) throw new Error('Request is incomplete or not complete')
 
     await connectDB()
-    return res.status(404).json({
+    return res.status(200).json({
       status: 'success',
       message: 'Request Complete',
       url: req.originalUrl,
@@ -23,5 +24,7 @@ ProductRouter.get('/', async (req, res) => {
     })
   }
 })
+
+ProductRouter.post('/add-product', addProduct)
 
 export default ProductRouter
