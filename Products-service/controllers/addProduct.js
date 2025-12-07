@@ -11,6 +11,7 @@ const addProduct = async (req, res) => {
     const input = req.body
     await connectDB()
     const response = await Products.create(input)
+    if (!response) throw Error('Cannot Create Product')
 
     return res.status(200).json({
       status: 'success',
@@ -27,9 +28,19 @@ const addProduct = async (req, res) => {
         url: req.originalUrl,
       })
     }
+
+    if (error.name === 'ValidationError') {
+      return res.status(400).json({
+        status: 'failure',
+        // error: error.name,
+        message: `${error.message} - Request Failed`,
+        url: req.originalUrl,
+      })
+    }
+
     return res.status(404).json({
       status: 'failure',
-      // error,
+      error,
       message: `(Not Found)${error.message} - Request Failed`,
       url: req.originalUrl,
     })
@@ -44,6 +55,9 @@ const validateBody = (req) => {
   const category = req.body.category
   const stock = Number(req.body.stock)
   const coverImage = req.body.coverImage
+  const productImages = req.body.productImages
+
+  const isPresent = typeof productImages
 
   if (
     !title ||
@@ -52,7 +66,8 @@ const validateBody = (req) => {
     isNaN(price) ||
     !category ||
     isNaN(stock) ||
-    !coverImage
+    !coverImage ||
+    isPresent != 'object'
   )
     return false
 
