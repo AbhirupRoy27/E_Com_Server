@@ -37,6 +37,22 @@ const productSchema = new mongoose.Schema(
     coverImage: {
       required: true,
       type: String,
+      trim: true,
+    },
+    productImages: {
+      type: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
+      validate: {
+        validator: function (val) {
+          return val.length <= 6
+        },
+        message: 'You can upload a maximum of 6 product images.',
+      },
+      default: [],
     },
   },
   {
