@@ -56,6 +56,8 @@ const validateBody = (req) => {
   const stock = Number(req.body.stock)
   const coverImage = req.body.coverImage
   const productImages = req.body.productImages
+  const discount = req.body.discount
+  const varified = req.body.varified
 
   const isPresent = typeof productImages
 
@@ -67,7 +69,9 @@ const validateBody = (req) => {
     !category ||
     isNaN(stock) ||
     !coverImage ||
-    isPresent != 'object'
+    isPresent != 'object' ||
+    !varified ||
+    !discount
   )
     return false
 
