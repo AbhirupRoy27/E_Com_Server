@@ -2,8 +2,8 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import ProductRouter from './Router/products.js'
-import catchAllError from './Router/catchallError.js'
 import startCallback from './utils/startCallback.js'
+import catchAllError from './utils/catchAllError.js'
 dotenv.config()
 
 const app = express()
