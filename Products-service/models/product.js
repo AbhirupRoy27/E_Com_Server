@@ -27,6 +27,7 @@ const productSchema = new mongoose.Schema(
     discount: {
       type: Number,
       min: 0,
+      max: 90,
       default: 0,
     },
     varified: {
