@@ -6,7 +6,8 @@ export default async function getAllProduct(req, res) {
     const page = req.query.page || 1
     const limit = req.query.limit || 10
 
-    if (page < 0 || limit > 10 || limit < 0) throw Error('Bad Request')
+    if (page <= 0 || limit > 10 || limit <= 0)
+      throw Error('Bad Request limit or Page not Valid')
     await connectDB()
 
     const response = await Products.find({})
