@@ -4,9 +4,9 @@ import { connectDB } from '../utils/connectDB.js'
 export default async function getAllProduct(req, res) {
   try {
     const page = req.query.page || 1
-    const limit = req.query.limit || 10
+    const limit = req.query.limit || 15
 
-    if (page <= 0 || limit > 10 || limit <= 0)
+    if (page <= 0 || limit > 15 || limit <= 0)
       throw Error('Bad Request limit or Page not Valid')
     await connectDB()
 

@@ -4,7 +4,7 @@ export async function connectDB() {
   try {
     const DB_URI = process.env.DB_URI
     await mongoose.connect(DB_URI)
-    // console.log(mongoose.connection.readyState)
+    console.log(mongoose.connection.readyState == 1 && 'Connected')
   } catch (error) {
     console.log(error)
   }
