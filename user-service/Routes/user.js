@@ -1,24 +1,16 @@
 import { Router } from 'express'
 import addUserController from '../controllers/addUserController.js'
+import validateBodySchema from '../middleware/User/validateBodySchema.js'
+import requireSearchFields from '../middleware/User/requireSearchFields.js'
+import getUserController from '../controllers/getUserController.js'
+import findByUsernameController from '../controllers/findByUsernameController.js'
 
 const userRouter = Router()
 
-userRouter.post('/add-user', addUserController)
+userRouter.post('/add-user', validateBodySchema, addUserController)
 
-userRouter.get('/get-user', (req, res) => {
-  try {
-    return res.status(200).json({
-      status: 'success',
-      message: 'API Working: Can get the User.',
-      url: req.originalUrl,
-    })
-  } catch (error) {
-    return res.status(404).json({
-      status: 'failure',
-      message: error.message,
-      url: req.originalUrl,
-    })
-  }
-})
+userRouter.get('/get-user', requireSearchFields, getUserController)
+
+userRouter.get('/', findByUsernameController)
 
 export default userRouter
