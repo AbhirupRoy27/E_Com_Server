@@ -10,7 +10,7 @@ import notFound from './middleware/Errors/notFound.js'
 const app = express()
 dotenv.config()
 app.use(express.json())
-await connectDB()
+const res = await connectDB()
 
 app.use('/api/user', userRouter)
 
@@ -32,7 +32,9 @@ app.use(globalErrorHandler)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(
-    `Sever is running at host - http://localhost:${process.env.PORT || 3000}`
+    `Sever is running at host - http://localhost:${process.env.PORT || 3000}${
+      !res ? ', but DB not connected!' : ''
+    }`
   )
 })
 
