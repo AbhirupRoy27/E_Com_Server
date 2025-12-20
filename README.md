@@ -41,6 +41,18 @@ E_Com_Server/
     ├── models/
     ├── controllers/
     ├── config/
+  ├── auth-service/ (under developemnt)
+    ├── src/
+    ├── routes/
+    ├── models/
+    ├── controllers/
+    ├── config/
+  ├── user-service/ (under developemnt)
+    ├── src/
+    ├── routes/
+    ├── models/
+    ├── controllers/
+    ├── config/
   └── README.md
 ```
 
