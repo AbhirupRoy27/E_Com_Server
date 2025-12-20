@@ -1,10 +1,16 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import userRouter from './Routes/user.js'
+import connectDB from './utils/connectDB.js'
+import globalErrorHandler from './middleware/Errors/globalError.js'
+import handleValidationError from './middleware/Errors/validationError.js'
+import handleMongoError from './middleware/Errors/handleMogoError.js'
+import notFound from './middleware/Errors/notFound.js'
 
 const app = express()
 dotenv.config()
 app.use(express.json())
+await connectDB()
 
 app.use('/api/user', userRouter)
 
@@ -16,15 +22,13 @@ app.get('/', (req, res) => {
   })
 })
 
-app.use((req, res) => {
-  const error = new Error('NOT FOUND')
-  return res.status(500).json({
-    status: 'failure',
-    message: 'NO SUCH ROUTE IN API',
-    error: error.message,
-    url: req.originalUrl,
-  })
-})
+// NOT FOUND
+app.use(notFound)
+
+// ERROR Handlers
+app.use(handleValidationError)
+app.use(handleMongoError)
+app.use(globalErrorHandler)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(
