@@ -11,7 +11,10 @@ const findByUsernameController = async (req, res, next) => {
       })
     }
 
-    const users = await User.find({ username: username })
+    const users = await User.find(
+      { username },
+      { password: 0, createdAt: 0, updatedAt: 0, __v: 0 }
+    )
     if (!users || users.length < 1) {
       return res.status(404).json({
         status: 'success',
