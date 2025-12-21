@@ -23,6 +23,41 @@ const userSchema = new mongoose.Schema(
       minLength: [6, 'username should be at least 6 characters!'],
       trim: true,
     },
+    orders: {
+      type: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
+      default: [],
+    },
+    savedAddress: {
+      type: {
+        buildingNo: {
+          type: Number,
+        },
+        pincode: {
+          type: Number,
+        },
+        street: {
+          type: String,
+        },
+        city: {
+          type: String,
+        },
+        state: {
+          type: String,
+        },
+      },
+      default: {
+        buildingNo: 0,
+        pincode: 0,
+        street: '',
+        city: '',
+        state: '',
+      },
+    },
   },
   {
     timestamps: true,
