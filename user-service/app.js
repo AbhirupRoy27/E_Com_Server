@@ -6,11 +6,14 @@ import globalErrorHandler from './middleware/Errors/globalError.js'
 import handleValidationError from './middleware/Errors/validationError.js'
 import handleMongoError from './middleware/Errors/handleMogoError.js'
 import notFound from './middleware/Errors/notFound.js'
+import orderRouter from './Router/orderRouter.js'
 
 const app = express()
 dotenv.config()
 app.use(express.json())
 const res = await connectDB()
+
+app.use('/api/orders', orderRouter)
 
 app.use('/api/user', userRouter)
 
