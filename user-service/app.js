@@ -1,12 +1,12 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import userRouter from './Routes/user.js'
-import connectDB from './utils/connectDB.js'
-import globalErrorHandler from './middleware/Errors/globalError.js'
+import connectDB from './utils/DB/connectDB.js'
+import orderRouter from './Routes/orderRouter.js'
+import userRouter from './Routes/userRouter.js'
+import notFoundError from './middleware/Errors/notFoundError.js'
 import handleValidationError from './middleware/Errors/validationError.js'
 import handleMongoError from './middleware/Errors/handleMogoError.js'
-import notFound from './middleware/Errors/notFound.js'
-import orderRouter from './Router/orderRouter.js'
+import globalErrorMiddleware from './middleware/Errors/globalError.js'
 
 const app = express()
 dotenv.config()
@@ -15,23 +15,34 @@ const res = await connectDB()
 
 app.use('/api/orders', orderRouter)
 
-app.use('/api/user', userRouter)
+app.use('/api/auth', userRouter)
 
 app.get('/', (req, res) => {
   return res.status(200).json({
     status: 'success',
-    message: 'API Working',
-    url: req.originalUrl,
+    message: 'API: User-Service is active and ready to use',
+    possibleRoutes: [
+      {
+        name: 'order-service',
+        route: '/api/orders',
+        use: 'This Route handles the Order related API calls.',
+      },
+      {
+        name: 'auth-service',
+        route: '/api/auth',
+        use: 'This Route handles the Auth related API calls.',
+      },
+    ],
   })
 })
 
 // NOT FOUND
-app.use(notFound)
+app.use(notFoundError)
 
 // ERROR Handlers
 app.use(handleValidationError)
 app.use(handleMongoError)
-app.use(globalErrorHandler)
+app.use(globalErrorMiddleware)
 
 app.listen(process.env.PORT || 3000, () => {
   console.log(
