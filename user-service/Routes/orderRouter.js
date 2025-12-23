@@ -1,14 +1,18 @@
 import { Router } from 'express'
 import validateOrderFields from '../Middleware/Order/validateOrderFields.js'
-import orderController from '../Controllers/orderController.js'
 import findOrderController from '../Controllers/findOrderController.js'
 import validateOrderId from '../Middleware/Order/validateOrderId.js'
+import orderConfirmationController from '../controllers/orderControllers/orderConfirmationController.js'
 
 const orderRouter = Router()
 
 orderRouter.get('/find-order', validateOrderId, findOrderController)
 
-orderRouter.patch('/order-confirm', validateOrderFields, orderController)
+orderRouter.patch(
+  '/order-confirm',
+  validateOrderFields,
+  orderConfirmationController
+)
 
 orderRouter.get('/', (req, res) => {
   return res.status(200).json({
