@@ -1,4 +1,4 @@
-export default function notFound(req, res, next) {
+export default function notFoundError(req, res, next) {
   res.status(404).json({
     status: 'failure',
     message: 'No such route in API',
