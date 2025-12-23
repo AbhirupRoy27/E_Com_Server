@@ -7,7 +7,7 @@ const findByUsernameController = async (req, res, next) => {
       return res.status(200).json({
         status: 'failure',
         message: `${req.originalUrl} is not a specified route`,
-        routes: [`/api/user?username=YOUR_USERNAME`],
+        routes: [`/api/auth?username=YOUR_USERNAME`],
       })
     }
 
@@ -17,8 +17,8 @@ const findByUsernameController = async (req, res, next) => {
     )
     if (!users || users.length < 1) {
       return res.status(404).json({
-        status: 'success',
-        message: `No user with username: ${username}`,
+        status: 'failure',
+        message: `NOT_FOUND: No user with username: ${username}`,
       })
     }
 

@@ -3,6 +3,7 @@ import validateOrderFields from '../Middleware/Order/validateOrderFields.js'
 import findOrderController from '../controllers/orderControllers/findOrderController.js'
 import validateOrderId from '../Middleware/Order/validateOrderId.js'
 import orderConfirmationController from '../controllers/orderControllers/orderConfirmationController.js'
+import metaInfoConroller from '../controllers/orderControllers/metaInfoController.js'
 
 const orderRouter = Router()
 
@@ -14,12 +15,6 @@ orderRouter.patch(
   orderConfirmationController
 )
 
-orderRouter.get('/', (req, res) => {
-  return res.status(200).json({
-    status: 'success',
-    message: 'API Working(Order)',
-    url: req.originalUrl,
-  })
-})
+orderRouter.get('/', metaInfoConroller)
 
 export default orderRouter
