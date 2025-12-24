@@ -7,9 +7,9 @@ export default function requireSearchFields(req, res, next) {
     })
   }
 
-  const { email } = req.body
+  const { email, username } = req.body
 
-  if (!email) {
+  if (!email && !username) {
     return res.status(400).json({
       status: 'failure',
       message: 'BAD REQUEST: Missing or Invalid data',

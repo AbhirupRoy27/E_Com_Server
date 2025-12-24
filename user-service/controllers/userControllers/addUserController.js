@@ -1,5 +1,5 @@
-import { User } from '../model/userModel.js'
-import hashPass from '../utils/Password/hashPass.js'
+import { User } from '../../model/userModel.js'
+import hashPass from '../../utils/Password/hashPass.js'
 
 export default async function addUserController(req, res, next) {
   try {

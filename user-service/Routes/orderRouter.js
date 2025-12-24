@@ -3,7 +3,7 @@ import validateOrderFields from '../Middleware/Order/validateOrderFields.js'
 import findOrderController from '../controllers/orderControllers/findOrderController.js'
 import validateOrderId from '../Middleware/Order/validateOrderId.js'
 import orderConfirmationController from '../controllers/orderControllers/orderConfirmationController.js'
-import metaInfoConroller from '../controllers/orderControllers/orderMetaInfoController.js'
+import OrderMetaInfoConroller from '../controllers/orderControllers/orderMetaInfoController.js'
 
 const orderRouter = Router()
 
@@ -15,6 +15,6 @@ orderRouter.patch(
   orderConfirmationController
 )
 
-orderRouter.get('/', metaInfoConroller)
+orderRouter.get('/', OrderMetaInfoConroller)
 
 export default orderRouter

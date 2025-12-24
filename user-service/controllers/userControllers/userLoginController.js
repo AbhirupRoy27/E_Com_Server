@@ -1,6 +1,6 @@
-import { User } from '../model/userModel.js'
-import checkPass from '../utils/Password/checkPass.js'
-import userNotFound from '../utils/User/userNotFound.js'
+import { User } from '../../model/userModel.js'
+import checkPass from '../../utils/Password/checkPass.js'
+import userNotFound from '../../utils/User/userNotFound.js'
 
 const userLoginController = async (req, res, next) => {
   try {
