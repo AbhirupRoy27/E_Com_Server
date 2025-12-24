@@ -155,4 +155,138 @@ Response Example
 
 ## Auth Routes ( /api/auth )
 
+### i) Orders Default Route ( /add-user )
+
+- This is a POST route.
+- This handles register the user in the DB.
+- Input is validated and then the request is handled.
+  - Body Example,
+  ```
+  {
+    "username": "Soham",
+    "email": "abcd@gmail.com",
+    "password": "Soham12345",
+    "orders": [],
+    "savedAddress": {
+      "buildingNo": 0,
+      "pincode": 0,
+      "street": "",
+      "city": "",
+      "state": ""
+    }
+  }
+  ```
+- The password is hased and saved in the DB to secure user data.
+- { username, email, password } are required fileds.
+  - response example,
+  ```
+  {
+    "status": "success",
+    "message": "data is added to DB",
+    "insertedData": {
+      "username": "Soham",
+      "email": "abcd@gmail.com",
+      "isSubscribed": false
+    }
+  }
+  ```
+
+### ii) Orders Default Route ( /user-login )
+
+- It is a POST route.
+- This is the user login handler.
+- { email, password } must be given in the body of the request.
+  - request example,
+  ```
+  {
+    "email": "abcd@gmail.com",
+    "password": "Soham12345",
+  }
+  ```
+- On successful Auth it responds.
+  ```
+  {
+    "email": "abcd@gmail.com",
+    "username": "Soham",
+    "orders": [],
+    "wishlist": [],
+    "savedAddress": {
+      "buildingNo": 0,
+        "pincode": 0,
+        "street": "",
+        "city": "",
+        "state": ""
+      },
+    "isSubscribed": false
+  }
+  ```
+
+### iii) Orders Default Route ( /get-user )
+
+- It is a GET route.
+- This gets the user info in the reponse.
+- { email or username } must be given in the body of the request.
+  - request example,
+  ```
+  {
+    "email": "abcd@gmail.com",
+    "username": "Soham",
+  }
+  ```
+  - On successful Auth it responds.
+  ```
+  {
+    "status": "success",
+    "message": "API Working: User Data found with email: abcd@gmail.com.",
+    "userDetails": {
+      "_id": "694c12ab41eba75a8ea3cce8",
+      "firstName": "",
+      "lastName": "",
+      "username": "Soham",
+      "email": "abcd@gmail.com",
+      "orders": [],
+      "wishlist": [],
+      "isSubscribed": false
+    }
+  }
+  ```
+
+### iv) Orders Default Route ( / )
+
+- This is the default route
+- It returns the meta data about the service
+  - example,
+  ```
+  {
+    "status": "success",
+    "message": "API: Order-service Working.",
+    "possibleRoutes": [
+      {
+        "name": "",
+        "route": "/add-user",
+        "devInfo": "This Route handles adding User to DB",
+        "method": "POST"
+      },
+      {
+        "name": "",
+        "route": "/user-login",
+        "devInfo": "This Route handles the Order confirm related API calls.",
+        "method": "POST"
+      },
+      {
+        "name": "",
+        "route": "/get-user",
+        "devInfo": "This Route handles the Order confirm related API calls.",
+        "method": "GET"
+      },
+      {
+        "name": "Default Route",
+        "route": "/",
+        "devInfo": "This Route handle Default behaviour.",
+        "method": "GET"
+      }
+    ]
+  }
+  ```
+
 ## Wishlist Routes ( /api/orders )
