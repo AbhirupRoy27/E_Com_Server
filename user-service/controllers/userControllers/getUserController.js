@@ -11,6 +11,7 @@ export default async function getUserController(req, res, next) {
           createdAt: 0,
           updatedAt: 0,
           password: 0,
+          savedAddress: 0,
         }
       )
 
@@ -34,6 +35,7 @@ export default async function getUserController(req, res, next) {
         createdAt: 0,
         updatedAt: 0,
         password: 0,
+        savedAddress: 0,
       }
     )
 
