@@ -5,34 +5,23 @@ import userNotFound from '../../utils/User/userNotFound.js'
 const userLoginController = async (req, res, next) => {
   try {
     const { email, password } = req.body
-    const user = await User.findOne({ email })
+
+    const user = await User.findOne({ email }).select('-password -__v')
 
     if (!user) return userNotFound(res, email)
 
-    const result = await checkPass(password, user.password)
-    if (!result) {
+    const isMatch = await checkPass(password, user.password)
+    if (!isMatch) {
       return res.status(401).json({
         status: 'failure',
-        message: `auth failure for user email: ${email}`,
+        message: 'Authentication failed. Invalid credentials.',
       })
     }
+
     return res.status(200).json({
       status: 'success',
-      message: 'user found and auth success',
-      user: {
-        email,
-        username: user.username,
-        orders: user.orders,
-        wishlist: user.wishlist,
-        savedAddress: {
-          buildingNo: user.savedAddress.buildingNo,
-          pincode: user.savedAddress.pincode,
-          street: user.savedAddress.street,
-          city: user.savedAddress.city,
-          state: user.savedAddress.state,
-        },
-        isSubscribed: user.isSubscribed,
-      },
+      message: 'User authenticated successfully.',
+      user,
     })
   } catch (error) {
     next(error)
@@ -40,3 +29,54 @@ const userLoginController = async (req, res, next) => {
 }
 
 export default userLoginController
+
+
+
+
+
+// V0
+
+
+// import { User } from '../../model/userModel.js'
+// import checkPass from '../../utils/Password/checkPass.js'
+// import userNotFound from '../../utils/User/userNotFound.js'
+
+// const userLoginController = async (req, res, next) => {
+//   try {
+//     const { email, password } = req.body
+//     const user = await User.findOne({ email })
+
+//     if (!user) return userNotFound(res, email)
+
+//     const result = await checkPass(password, user.password)
+//     if (!result) {
+//       return res.status(401).json({
+//         status: 'failure',
+//         message: `auth failure for user email: ${email}`,
+//       })
+//     }
+//     return res.status(200).json({
+//       status: 'success',
+//       message: 'user found and auth success',
+//       user: {
+//         email,
+//         username: user.username,
+//         orders: user.orders,
+//         wishlist: user.wishlist,
+//         savedAddress: {
+//           buildingNo: user.savedAddress.buildingNo,
+//           pincode: user.savedAddress.pincode,
+//           street: user.savedAddress.street,
+//           city: user.savedAddress.city,
+//           state: user.savedAddress.state,
+//         },
+//         isSubscribed: user.isSubscribed,
+//       },
+//     })
+//   } catch (error) {
+//     next(error)
+//   }
+// }
+
+// export default userLoginController
+
